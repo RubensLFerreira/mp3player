@@ -64,7 +64,7 @@ function Player() {
       <Title>MP3 Player</Title>
 
       {isPlaying ? (
-        <h2>{tracks[currentIndex]?.name || 'Música'}</h2>
+        <h2>{tracks[currentIndex]?.name}</h2>
       ) : (
         <h2>A música está pausada</h2>
       )}
