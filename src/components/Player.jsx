@@ -1,19 +1,44 @@
+import React from "react";
 import { useRef, useState, useEffect } from "react";
-import {
-  AiFillBackward,
-  AiFillPlayCircle,
-  AiFillPauseCircle,
-  AiFillForward,
-} from "react-icons/ai";
+import { Link } from "react-router-dom";
+
+import { styled } from "@mui/material/styles";
+
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MenuIcon from "@mui/icons-material/Menu";
+
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import FastForwardIcon from "@mui/icons-material/FastForward";
+import FastRewindIcon from "@mui/icons-material/FastRewind";
+import PauseIcon from "@mui/icons-material/Pause";
 
 import napster from "../services/napster";
 
-import wallpaper from "/img/wallpaper_album.jpg";
+import "./style.css";
 
-import { PlayCard, Title, ButtonNextAndPrev, ButtonPlay } from "../styles";
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
-function Player() {
-  // const [song, setSOng] = useState();
+export default function Player() {
+  const [expanded, setExpanded] = React.useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,19 +84,38 @@ function Player() {
     loadSong(currentIndex - 1);
   };
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <PlayCard>
-      <Title>MP3 Player</Title>
+    <Card className="container" sx={{ maxWidth: 345 }}>
+      {/* header */}
+      <CardHeader className="header-title" title="MP3 Player" />
 
-      {isPlaying ? (
-        <h2>{tracks[currentIndex]?.name}</h2>
-      ) : (
-        <h2>A música está pausada</h2>
-      )}
+      {/* Capa */}
+      <CardMedia
+        component="img"
+        height="194"
+        image="http://1.bp.blogspot.com/-Tk5i7cRrKHA/VVnEOwgWr7I/AAAAAAAA1fY/qG_pijBKA60/s1600/mariagaduguelacapa.png"
+        alt="Paella dish"
+      />
 
-      <img src={wallpaper} style={{ width: "70%", height: "50%" }} />
-      <h3>{tracks[currentIndex]?.artistName}</h3>
-      <p>Album: {tracks[currentIndex]?.albumName}</p>
+      {/* informações */}
+      <CardContent className="body-description">
+        <Link to={"description"}>
+          <IconButton aria-label="settings">
+            <MenuIcon />
+          </IconButton>
+        </Link>
+
+        <Typography variant="body2" color="text.primary">
+          Album: {tracks[currentIndex]?.albumName}
+        </Typography>
+        <Typography variant="h6" color="text.primary">
+          {tracks[currentIndex]?.name} - {tracks[currentIndex]?.artistName}
+        </Typography>
+      </CardContent>
 
       <audio
         ref={music}
@@ -81,20 +125,52 @@ function Player() {
         }
       ></audio>
 
-      {/* <p>{tracks[currentIndex]?.playbackSeconds}</p> */}
-      <ButtonNextAndPrev onClick={prev}>
-        <AiFillBackward />
-      </ButtonNextAndPrev>
+      {/* butões */}
+      <CardContent className="buttons">
+        <IconButton aria-label="play">
+          <FastRewindIcon fontSize="large" onClick={prev} />
+        </IconButton>
 
-      <ButtonPlay onClick={isPlaying ? pause : play}>
-        {isPlaying ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
-      </ButtonPlay>
+        <IconButton aria-label="play-pause" onClick={isPlaying ? pause : play}>
+          {isPlaying ? (
+            <PauseIcon fontSize="large" />
+          ) : (
+            <PlayCircleIcon fontSize="large" />
+          )}
+        </IconButton>
 
-      <ButtonNextAndPrev onClick={next}>
-        <AiFillForward />
-      </ButtonNextAndPrev>
-    </PlayCard>
+        <IconButton aria-label="play">
+          <FastForwardIcon fontSize="large" onClick={next} />
+        </IconButton>
+      </CardContent>
+
+      {/* Rodapé */}
+      <CardActions disableSpacing className="footer">
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
+
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>Letra:</Typography>
+          <Typography paragraph>
+            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
+            set aside for 10 minutes.
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
   );
 }
-
-export default Player;

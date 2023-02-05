@@ -21,13 +21,13 @@ export const PlayCard = styled.div`
 export const ButtonNextAndPrev = styled.button`
   background: none;
   border-style: none;
-  font-size: 20pt;
+  font-size: 25pt;
   color: white;
 `;
 
 export const ButtonPlay = styled.button`
   background: none;
   border-style: none;
-  font-size: 25pt;
+  font-size: 30pt;
   color: white;
 `;
