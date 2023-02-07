@@ -109,8 +109,8 @@ export default function Player() {
           </IconButton>
         </Link>
 
-        <Typography variant="body2" color="text.primary">
-          Album: {tracks[currentIndex]?.albumName}
+        <Typography variant="body2" color="text.primary" style={{fontWeight: 'bold'}}>
+          {tracks[currentIndex]?.albumName}
         </Typography>
         <Typography variant="h6" color="text.primary">
           {tracks[currentIndex]?.name} - {tracks[currentIndex]?.artistName}
