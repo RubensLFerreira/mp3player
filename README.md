@@ -1,3 +1,5 @@
 # mp3player
 
-<img src="https://i.pinimg.com/564x/af/1a/53/af1a53b082d965a398b40c474f0fa812.jpg" />
+Project developed for the evaluation of the PWEB2 discipline. We used the React.js lib, axios, with the Napster API.
+
+<a data-flickr-embed="true" href="https://www.flickr.com/photos/197682482@N03/52683959251/in/dateposted-public/" title="MP3 Player - Rubens"><img src="https://live.staticflickr.com/65535/52683959251_5ab1c8c63e_c.jpg" width="800" height="412" alt="MP3 Player - Rubens"></a>
