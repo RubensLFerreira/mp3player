@@ -2,19 +2,14 @@ import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { styled } from "@mui/material/styles";
-
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -26,17 +21,6 @@ import napster from "../services/napster";
 
 import "./style.css";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
 export default function Player() {
   const [expanded, setExpanded] = React.useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -44,7 +28,7 @@ export default function Player() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const music = useRef();
-  const key = "ZTVhYTU3MWEtZjRhNy00MmRmLWJiZDAtNjQwNTAwN2E0ODhi";
+  const key = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     getMusics();
@@ -103,13 +87,11 @@ export default function Player() {
 
       {/* informações */}
       <CardContent className="body-description">
-        <Link to={"description"}>
-          <IconButton aria-label="settings">
-            <MenuIcon />
-          </IconButton>
-        </Link>
-
-        <Typography variant="body2" color="text.primary" style={{fontWeight: 'bold'}}>
+        <Typography
+          variant="body2"
+          color="text.primary"
+          style={{ fontWeight: "bold" }}
+        >
           {tracks[currentIndex]?.albumName}
         </Typography>
         <Typography variant="h6" color="text.primary">
@@ -149,28 +131,12 @@ export default function Player() {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+        <Link to={"/"}>
+          <IconButton aria-label="settings">
+            <MenuIcon />
+          </IconButton>
+        </Link>
       </CardActions>
-
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Letra:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and
-            set aside for 10 minutes.
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
 }

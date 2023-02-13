@@ -1,3 +1,9 @@
-export default function Description() {
-  return <Card className="container" sx={{ maxWidth: 345 }}></Card>;
+function Description() {
+  return (
+    <div>
+      <Card className="container" sx={{ maxWidth: 345 }}></Card>
+    </div>
+  );
 }
+
+export default Description;
